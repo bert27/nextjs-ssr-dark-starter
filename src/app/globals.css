@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+
+body {
+  background: var(--mui-palette-background-default);
+  color: var(--mui-palette-text-primary);
+  font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+  transition: background 0.2s, color 0.2s;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Demo box */
+.demo-theme-bg {
+  background: var(--mui-palette-background-paper);
+  color: var(--mui-palette-text-primary);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Iconos */
+html[data-mui-color-scheme='light'] {
+  --icon-filter: none;
+}
+html[data-mui-color-scheme='dark'] {
+  --icon-filter: invert(1);
+}
+
+.icon-themed {
+  filter: var(--icon-filter, none);
+  transition: filter 0.2s;
+}
