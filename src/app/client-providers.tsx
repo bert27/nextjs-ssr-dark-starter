@@ -1,30 +1,30 @@
-// client-providers.tsx
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider as MuiThemeProvider } from '@mui/material'; // not styles!
-import { muiTheme } from './themes/muiTheme';
+import { ThemeProvider } from '@mui/material';
+import { createMuiTheme } from './themes/muiTheme';
 import './globals.css';
-
-function ThemedApp({ children, themeMode }: { children: React.ReactNode; themeMode: 'light' | 'dark' }) {
-  return (
-    <MuiThemeProvider
-      theme={muiTheme}
-      defaultMode={themeMode} // ← Aquí está el cambio
-      modeStorageKey="themeSaved"
-    >
-      <CssBaseline />
-      {children}
-    </MuiThemeProvider>
-  );
-}
+import { SsrColorSchemeProvider, IThemeMode, useSsrColorScheme } from './themes/theme-context';
 
 interface ClientProvidersProps {
   children: React.ReactNode;
-  themeMode: 'light' | 'dark';
+  themeMode: IThemeMode;
 }
-
+function InnerThemeProvider({ children, themeMode }: { children: React.ReactNode; themeMode: IThemeMode }) {
+  const { mode } = useSsrColorScheme();
+  const muiTheme = useMemo(() => createMuiTheme(mode), [mode]);
+  return (
+    <ThemeProvider theme={muiTheme} defaultMode={themeMode} modeStorageKey="themeSaved">
+      <CssBaseline />
+      {children}
+    </ThemeProvider>
+  );
+}
 export default function ClientProviders({ children, themeMode }: ClientProvidersProps) {
-  return <ThemedApp themeMode={themeMode}>{children}</ThemedApp>;
+  return (
+    <SsrColorSchemeProvider initialMode={themeMode}>
+      <InnerThemeProvider themeMode={themeMode}>{children}</InnerThemeProvider>
+    </SsrColorSchemeProvider>
+  );
 }

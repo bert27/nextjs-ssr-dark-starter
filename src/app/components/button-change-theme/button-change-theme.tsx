@@ -3,10 +3,10 @@
 import Image from 'next/image';
 import changeThemeIcon from './changeTheme.svg';
 import IconButtonWithTooltip from './IconButtonWithTooltip';
-import { useColorScheme } from '@mui/material';
+import { useSsrColorScheme } from '@/app/themes/theme-context';
 
 export const ButtonChangeTheme = () => {
-  const { mode, setMode } = useColorScheme();
+  const { mode, setMode } = useSsrColorScheme();
 
   const handleChangeTheme = () => {
     setMode(mode === 'dark' ? 'light' : 'dark');

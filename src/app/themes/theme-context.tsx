@@ -2,11 +2,11 @@
 
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 
-type ThemeMode = 'light' | 'dark' | 'system';
+export type IThemeMode = 'light' | 'dark';
 
 interface SsrColorSchemeContextType {
-  mode: ThemeMode;
-  setMode: (mode: ThemeMode) => void;
+  mode: IThemeMode;
+  setMode: (mode: IThemeMode) => void;
 }
 
 const SsrColorSchemeContext = createContext<SsrColorSchemeContextType>({
@@ -16,15 +16,13 @@ const SsrColorSchemeContext = createContext<SsrColorSchemeContextType>({
 
 interface SsrColorSchemeProviderProps {
   children: ReactNode;
-  initialMode: ThemeMode;
+  initialMode: IThemeMode;
 }
 
 export function SsrColorSchemeProvider({ children, initialMode }: SsrColorSchemeProviderProps) {
-  const [mode, setModeState] = useState<ThemeMode>(initialMode);
-
-  const setMode = useCallback((newMode: ThemeMode) => {
+  const [mode, setModeState] = useState<IThemeMode>(initialMode);
+  const setMode = useCallback((newMode: IThemeMode) => {
     setModeState(newMode);
-
     // SSR-safe persistence
     document.cookie = `themeSaved=${newMode}; path=/; max-age=31536000; SameSite=Lax`;
     document.documentElement.setAttribute('data-mui-color-scheme', newMode);

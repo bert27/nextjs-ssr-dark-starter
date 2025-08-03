@@ -28,3 +28,25 @@ html[data-mui-color-scheme='dark'] {
   filter: var(--icon-filter, none);
   transition: filter 0.2s;
 }
+
+.footer-btn-primary {
+  background-color: var(--mui-palette-primary-main); /* lo inyecta MUI con cssVariables */
+  color: var(--mui-palette-primary-contrastText, #fff);
+  border-radius: 9999px;
+  padding: 0.5rem 1.2rem;
+  transition: background 0.2s;
+}
+.footer-btn-primary:hover {
+  filter: brightness(0.95);
+}
+
+.footer-btn-secondary {
+  background-color: var(--mui-palette-secondary-main);
+  color: var(--mui-palette-secondary-contrastText, #fff);
+  border-radius: 9999px;
+  padding: 0.5rem 1.2rem;
+  transition: background 0.2s;
+}
+.footer-btn-secondary:hover {
+  filter: brightness(0.95);
+}
